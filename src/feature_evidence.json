@@ -1,0 +1,131 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-live-com-inspired-landing-page-that-presents-a-clean-minimal-sign-in-entry-experience-with-an-input-labeled-email-phone-or-skype-and-primary-actions-next-and-sign-in-options-the-page-must-clearly-indicate-it-is-a-demo-app-and-must-not-use-microsoft-trademarks-logos-or-copyrighted-brand-assets",
+      "featureTitle": "Create a Live.com-inspired landing page that presents a clean, minimal sign-in entry experience with an input labeled \"Email, phone, or Skype\" and primary actions \"Next\" and \"Sign-in options\". The page must clearly indicate it is a demo app and must not use Microsoft trademarks, logos, or copyrighted brand assets.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/DisclaimerBanner.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-authentication-using-internet-identity-clicking-next-on-the-landing-page-must-initiate-the-internet-identity-login-flow-and-on-success-the-ui-must-show-a-signed-in-state-with-the-user-principal-and-a-sign-out-action",
+      "featureTitle": "Implement authentication using Internet Identity. Clicking \"Next\" on the landing page must initiate the Internet Identity login flow, and on success the UI must show a signed-in state with the user principal and a \"Sign out\" action.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AuthGate.tsx",
+        "frontend/src/components/SignedInHeader.tsx",
+        "frontend/src/pages/LandingPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-post-sign-in-app-launcher-page-modeled-after-the-live-com-entry-hub-show-a-grid-of-product-tiles-e-g-mail-calendar-people-files-and-a-top-bar-with-a-search-input-tiles-can-navigate-to-simple-placeholder-pages-within-the-app-no-external-redirects-required",
+      "featureTitle": "Add a post-sign-in \"app launcher\" page modeled after the Live.com entry hub: show a grid of product tiles (e.g., Mail, Calendar, People, Files) and a top bar with a search input. Tiles can navigate to simple placeholder pages within the app (no external redirects required).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/app/tiles.ts",
+        "frontend/src/pages/LauncherPage.tsx",
+        "frontend/src/pages/TilePlaceholderPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-wire-the-frontend-to-the-backend-using-react-query-for-1-fetching-the-signed-in-user-record-and-2-refreshing-user-state-after-sign-in-sign-out",
+      "featureTitle": "Wire the frontend to the backend using React Query for: (1) fetching the signed-in user record, and (2) refreshing user state after sign-in/sign-out.",
+      "files": [
+        "frontend/src/components/SignedInHeader.tsx",
+        "frontend/src/hooks/useAuthRefresh.ts",
+        "frontend/src/main.tsx",
+        "frontend/src/pages/LauncherPage.tsx",
+        "frontend/src/queries/userQueries.ts",
+        "frontend/src/queryClient.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-coherent-visual-theme-for-the-entire-app-that-evokes-a-modern-airy-sign-in-portal-light-background-crisp-typography-subtle-depth-without-using-microsoft-s-signature-branding-use-a-consistent-color-palette-spacing-system-and-component-styles-across-all-pages",
+      "featureTitle": "Apply a coherent visual theme for the entire app that evokes a modern, airy sign-in portal (light background, crisp typography, subtle depth), without using Microsoft’s signature branding. Use a consistent color palette, spacing system, and component styles across all pages.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/pages/LandingPage.tsx",
+        "frontend/src/pages/LauncherPage.tsx",
+        "frontend/src/pages/TilePlaceholderPage.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-image-assets-required-for-the-landing-launcher-ui-to-frontend-public-assets-generated-and-use-them-in-the-ui-do-not-serve-images-via-the-backend",
+      "featureTitle": "Add generated static image assets required for the landing/launcher UI to frontend/public/assets/generated and use them in the UI (do not serve images via the backend).",
+      "files": [
+        "frontend/src/pages/LandingPage.tsx",
+        "frontend/src/pages/LauncherPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

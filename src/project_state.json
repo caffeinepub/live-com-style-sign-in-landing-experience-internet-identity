@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a live.com-like web app/site.",
+  "architectural_notes": [
+    "Target: replicate key live.com landing/sign-in flow and redirect/entry experience."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Abstract airy background illustration with soft shapes (signin-bg.dim_1920x1080.png)\n- Minimal set of 8 monochrome line icons for tiles (tile-icons.dim_512x512.png)\n- Simple neutral brand mark (not Microsoft-like), geometric symbol (app-mark.dim_512x512.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-live-com-inspired-landing-page-that-presents-a-clean-minimal-sign-in-entry-experience-with-an-input-labeled-email-phone-or-skype-and-primary-actions-next-and-sign-in-options-the-page-must-clearly-indicate-it-is-a-demo-app-and-must-not-use-microsoft-trademarks-logos-or-copyrighted-brand-assets",
+      "title": "Create a Live.com-inspired landing page that presents a clean, minimal sign-in entry experience with an input labeled \"Email, phone, or Skype\" and primary actions \"Next\" and \"Sign-in options\". The page must clearly indicate it is a demo app and must not use Microsoft trademarks, logos, or copyrighted brand assets.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-authentication-using-internet-identity-clicking-next-on-the-landing-page-must-initiate-the-internet-identity-login-flow-and-on-success-the-ui-must-show-a-signed-in-state-with-the-user-principal-and-a-sign-out-action",
+      "title": "Implement authentication using Internet Identity. Clicking \"Next\" on the landing page must initiate the Internet Identity login flow, and on success the UI must show a signed-in state with the user principal and a \"Sign out\" action.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-post-sign-in-app-launcher-page-modeled-after-the-live-com-entry-hub-show-a-grid-of-product-tiles-e-g-mail-calendar-people-files-and-a-top-bar-with-a-search-input-tiles-can-navigate-to-simple-placeholder-pages-within-the-app-no-external-redirects-required",
+      "title": "Add a post-sign-in \"app launcher\" page modeled after the Live.com entry hub: show a grid of product tiles (e.g., Mail, Calendar, People, Files) and a top bar with a search input. Tiles can navigate to simple placeholder pages within the app (no external redirects required).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-frontend-to-the-backend-using-react-query-for-1-fetching-the-signed-in-user-record-and-2-refreshing-user-state-after-sign-in-sign-out",
+      "title": "Wire the frontend to the backend using React Query for: (1) fetching the signed-in user record, and (2) refreshing user state after sign-in/sign-out.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-visual-theme-for-the-entire-app-that-evokes-a-modern-airy-sign-in-portal-light-background-crisp-typography-subtle-depth-without-using-microsoft-s-signature-branding-use-a-consistent-color-palette-spacing-system-and-component-styles-across-all-pages",
+      "title": "Apply a coherent visual theme for the entire app that evokes a modern, airy sign-in portal (light background, crisp typography, subtle depth), without using Microsoft’s signature branding. Use a consistent color palette, spacing system, and component styles across all pages.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-required-for-the-landing-launcher-ui-to-frontend-public-assets-generated-and-use-them-in-the-ui-do-not-serve-images-via-the-backend",
+      "title": "Add generated static image assets required for the landing/launcher UI to frontend/public/assets/generated and use them in the UI (do not serve images via the backend).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a website/app modeled after live.com (Microsoft account sign-in / Outlook entry experience).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Persist a minimal user record in the Motoko canister keyed by principal, including createdAt and lastLogin timestamps, and expose query/call methods to fetch the current user record and update lastLogin on sign-in.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Live.com-style sign-in landing experience (Internet Identity)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

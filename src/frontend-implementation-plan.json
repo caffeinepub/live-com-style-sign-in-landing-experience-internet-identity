@@ -1,0 +1,213 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Live.com-inspired demo sign-in + Internet Identity + launcher hub (frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a clean, Live.com-inspired (but non-branded) demo landing page with email/phone/Skype input and primary actions.",
+      "acceptanceCriteria": [
+        "Landing page renders with an email/phone/Skype input and buttons labeled \"Next\" and \"Sign-in options\".",
+        "Page includes a visible disclaimer such as \"Demo sign-in\" and avoids Microsoft branding (no Microsoft logo, no Windows logo, no Outlook logo).",
+        "UI is responsive and usable on mobile and desktop."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "create",
+          "description": "Create the landing page UI featuring an input labeled \"Email, phone, or Skype\", primary buttons \"Next\" and \"Sign-in options\", and an always-visible English disclaimer indicating this is a demo app (no Microsoft trademarks/logos). Compose shadcn-ui components (e.g., Button/Input/Card) to ensure consistent interaction states; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell and route structure; wire the landing page as the unauthenticated entry view (no Microsoft branding)."
+        },
+        {
+          "path": "frontend/src/components/DisclaimerBanner.tsx",
+          "operation": "create",
+          "description": "Add a small reusable disclaimer/banner component (English) to clearly indicate \"Demo sign-in\" and that the UI is inspired but not affiliated. Compose with shadcn-ui primitives where helpful; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Use Internet Identity for authentication; \"Next\" triggers login, and signed-in UI shows principal and allows sign-out.",
+      "acceptanceCriteria": [
+        "Unauthenticated users see the landing/sign-in entry UI.",
+        "Clicking \"Next\" triggers Internet Identity sign-in.",
+        "After successful sign-in, the UI displays the authenticated principal and a \"Sign out\" control that returns the user to the unauthenticated state."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "modify",
+          "description": "Wire the \"Next\" action to call the existing Internet Identity login flow (via useInternetIdentity), show loading/disabled state while logging in, and handle login errors with an English message. Compose shadcn-ui Button/Input for consistent states; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AuthGate.tsx",
+          "operation": "create",
+          "description": "Create an auth gate/wrapper that decides whether to show the landing experience (anonymous) or signed-in routes (authenticated), using the Internet Identity context. Verify the component's usage instructions before implementing (if using shadcn-ui components for layout/messages)."
+        },
+        {
+          "path": "frontend/src/components/SignedInHeader.tsx",
+          "operation": "create",
+          "description": "Create a signed-in header area that shows the authenticated principal (as text) and a \"Sign out\" action that calls the Internet Identity clear/logout function. Compose shadcn-ui Button for the sign-out control; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Integrate AuthGate and wire post-login navigation to the launcher route; ensure sign-out returns user to the unauthenticated landing state and removes signed-in UI."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a post-sign-in app launcher hub with top search and a grid of product tiles navigating to placeholder pages.",
+      "acceptanceCriteria": [
+        "After signing in, user is taken to an app launcher page with a grid of at least 6 tiles and a top search input.",
+        "Each tile navigates to a corresponding placeholder route/page within the app.",
+        "Placeholder pages show the tile name and a short description (English) and provide a way to return to the launcher."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/LauncherPage.tsx",
+          "operation": "create",
+          "description": "Create the signed-in launcher page with a top bar search input and a responsive grid of at least 6 tiles (e.g., Mail, Calendar, People, Files, Notes, Photos). Use shadcn-ui Input/Card/Button (composed, not modified) for consistent styling; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/TilePlaceholderPage.tsx",
+          "operation": "create",
+          "description": "Create a generic placeholder page for tiles that shows the tile name + a short English description and includes a clear way to return to the launcher (e.g., back button/link). Compose shadcn-ui Button for navigation; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/app/tiles.ts",
+          "operation": "create",
+          "description": "Define the tile metadata (name, description, route slug, icon mapping) used by the launcher grid and placeholder pages (all user-facing text in English)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register routes for the launcher and each tile placeholder page; ensure navigation is internal (no external redirects) and only accessible in the signed-in portion of the app."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Use React Query to fetch the signed-in user record and refresh/clear cached user state across sign-in/sign-out.",
+      "acceptanceCriteria": [
+        "User record fetch is performed via React Query and reflects the current authenticated principal.",
+        "After sign-in, the UI refreshes to show user record data (at minimum lastLogin).",
+        "After sign-out, cached authenticated queries are cleared/invalidated so private UI does not remain visible."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/queryClient.ts",
+          "operation": "create",
+          "description": "Create and export a shared React Query QueryClient instance so sign-in/sign-out flows can reliably invalidate/clear cached authenticated queries."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Update app bootstrap to use the shared QueryClient from frontend/src/queryClient.ts (instead of creating it inline) so other modules can clear/invalidate queries on auth changes."
+        },
+        {
+          "path": "frontend/src/api/backendClient.ts",
+          "operation": "create",
+          "description": "Add a small frontend client wrapper that provides typed access to backend capabilities declared in frontend/src/backend.d.ts (e.g., getUserRecord/registerOrGetUser) using the existing core-infrastructure configuration patterns. Verify the component's usage instructions before implementing (core-infrastructure)."
+        },
+        {
+          "path": "frontend/src/queries/userQueries.ts",
+          "operation": "create",
+          "description": "Implement React Query hooks/keys for fetching the current user's record (via backendClient) and for triggering a refresh after successful sign-in. Ensure queries are enabled only when an authenticated identity is present."
+        },
+        {
+          "path": "frontend/src/hooks/useAuthRefresh.ts",
+          "operation": "create",
+          "description": "Create a small hook that listens for Internet Identity state changes (login success / clear) and invalidates or clears authenticated React Query caches accordingly (e.g., user record queries)."
+        },
+        {
+          "path": "frontend/src/pages/LauncherPage.tsx",
+          "operation": "modify",
+          "description": "Display minimal user record data after sign-in (at least lastLogin) using the React Query hook; keep all text in English. Compose shadcn-ui components for presenting the data (e.g., Card/Text styles); verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/SignedInHeader.tsx",
+          "operation": "modify",
+          "description": "On \"Sign out\", clear Internet Identity state and trigger React Query cache clearing/invalidation (via shared queryClient and/or helper hook) so private UI cannot remain visible. Compose shadcn-ui Button; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Apply a consistent, modern airy visual theme across landing, launcher, and placeholder pages (non-Microsoft branding).",
+      "acceptanceCriteria": [
+        "Theme is consistent across landing, launcher, and placeholder pages.",
+        "No use of Microsoft-specific brand colors/logos; overall look remains clean and professional.",
+        "Buttons, inputs, cards/tiles have consistent styling and interaction states (hover/focus/disabled)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global styling entry for Tailwind + shadcn token variables, defining a clean light theme (airy background, crisp typography, subtle depth) without Microsoft brand colors/logos. Keep styles consistent across pages."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Refine Tailwind theme tokens (if needed) to support the app’s palette, spacing, and subtle shadows for tiles/cards while keeping the overall aesthetic non-Microsoft-like."
+        },
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "modify",
+          "description": "Apply the global theme consistently (spacing, typography, focus rings, card depth) to the landing layout using composed shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LauncherPage.tsx",
+          "operation": "modify",
+          "description": "Apply the same theme system to the top bar, search input, and tile grid to match landing/placeholder styling using composed shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/TilePlaceholderPage.tsx",
+          "operation": "modify",
+          "description": "Ensure placeholder pages match the same layout rhythm and component styling (buttons/inputs/cards) using composed shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Add required generated static images under frontend/public/assets/generated and incorporate them into landing/launcher UI.",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "Landing and/or launcher page visually incorporates the generated images.",
+        "No backend endpoints are created to fetch these images."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/signin-bg.dim_1920x1080.png",
+          "operation": "create",
+          "description": "Add the generated static image asset (Abstract airy background illustration with soft shapes) at frontend/public/assets/generated/signin-bg.dim_1920x1080.png and ensure it is used by the landing and/or launcher layout."
+        },
+        {
+          "path": "frontend/public/assets/generated/tile-icons.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated static image asset (Minimal set of 8 monochrome line icons for tiles) at frontend/public/assets/generated/tile-icons.dim_512x512.png and use it to visually support the launcher tiles (e.g., via sprite/cropping in the UI)."
+        },
+        {
+          "path": "frontend/public/assets/generated/app-mark.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated static image asset (Simple neutral brand mark, geometric symbol) at frontend/public/assets/generated/app-mark.dim_512x512.png and incorporate it into the landing and/or launcher header area (non-Microsoft-like)."
+        },
+        {
+          "path": "frontend/src/pages/LandingPage.tsx",
+          "operation": "modify",
+          "description": "Incorporate the generated images into the landing page: use frontend/public/assets/generated/signin-bg.dim_1920x1080.png as a decorative background and include frontend/public/assets/generated/app-mark.dim_512x512.png as a neutral mark (no Microsoft branding)."
+        },
+        {
+          "path": "frontend/src/pages/LauncherPage.tsx",
+          "operation": "modify",
+          "description": "Incorporate the generated images into the launcher page: use frontend/public/assets/generated/tile-icons.dim_512x512.png to visually represent tiles and optionally display frontend/public/assets/generated/app-mark.dim_512x512.png in the top bar."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "kind": "build_request",
+  "title": "Live.com-style sign-in landing experience (Internet Identity)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a Live.com-inspired landing page that presents a clean, minimal sign-in entry experience with an input labeled \"Email, phone, or Skype\" and primary actions \"Next\" and \"Sign-in options\". The page must clearly indicate it is a demo app and must not use Microsoft trademarks, logos, or copyrighted brand assets.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landing page renders with an email/phone/Skype input and buttons labeled \"Next\" and \"Sign-in options\".",
+        "Page includes a visible disclaimer such as \"Demo sign-in\" and avoids Microsoft branding (no Microsoft logo, no Windows logo, no Outlook logo).",
+        "UI is responsive and usable on mobile and desktop."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement authentication using Internet Identity. Clicking \"Next\" on the landing page must initiate the Internet Identity login flow, and on success the UI must show a signed-in state with the user principal and a \"Sign out\" action.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users see the landing/sign-in entry UI.",
+        "Clicking \"Next\" triggers Internet Identity sign-in.",
+        "After successful sign-in, the UI displays the authenticated principal and a \"Sign out\" control that returns the user to the unauthenticated state."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a post-sign-in \"app launcher\" page modeled after the Live.com entry hub: show a grid of product tiles (e.g., Mail, Calendar, People, Files) and a top bar with a search input. Tiles can navigate to simple placeholder pages within the app (no external redirects required).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After signing in, user is taken to an app launcher page with a grid of at least 6 tiles and a top search input.",
+        "Each tile navigates to a corresponding placeholder route/page within the app.",
+        "Placeholder pages show the tile name and a short description (English) and provide a way to return to the launcher."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Persist a minimal user record in the Motoko canister keyed by principal, including createdAt and lastLogin timestamps, and expose query/call methods to fetch the current user record and update lastLogin on sign-in.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores user records keyed by caller principal with createdAt and lastLogin values.",
+        "Backend provides a method to fetch the caller’s user record.",
+        "When the frontend completes sign-in, it calls a backend method that creates the record if missing and updates lastLogin."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Wire the frontend to the backend using React Query for: (1) fetching the signed-in user record, and (2) refreshing user state after sign-in/sign-out.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User record fetch is performed via React Query and reflects the current authenticated principal.",
+        "After sign-in, the UI refreshes to show user record data (at minimum lastLogin).",
+        "After sign-out, cached authenticated queries are cleared/invalidated so private UI does not remain visible."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Apply a coherent visual theme for the entire app that evokes a modern, airy sign-in portal (light background, crisp typography, subtle depth), without using Microsoft’s signature branding. Use a consistent color palette, spacing system, and component styles across all pages.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across landing, launcher, and placeholder pages.",
+        "No use of Microsoft-specific brand colors/logos; overall look remains clean and professional.",
+        "Buttons, inputs, cards/tiles have consistent styling and interaction states (hover/focus/disabled)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add generated static image assets required for the landing/launcher UI to frontend/public/assets/generated and use them in the UI (do not serve images via the backend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "build live.com"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated with the specified filenames.",
+        "Landing and/or launcher page visually incorporates the generated images.",
+        "No backend endpoints are created to fetch these images."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (no additional backend services).",
+    "Do not edit files under frontend/src/components/ui or other immutable paths; compose those components instead.",
+    "Authentication must use Internet Identity only (no Microsoft account OAuth or third-party auth).",
+    "All user-facing text must be in English.",
+    "Do not use Microsoft trademarks, logos, or copyrighted brand assets."
+  ],
+  "nonGoals": [
+    "Replicating the real live.com functionality (Outlook/OneDrive integration, real email, file storage, or Microsoft services).",
+    "Implementing external OAuth sign-in, email/password auth, or MFA.",
+    "Real-time features (WebSockets, push notifications, chat)."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Abstract airy background illustration with soft shapes (signin-bg.dim_1920x1080.png)",
+      "Minimal set of 8 monochrome line icons for tiles (tile-icons.dim_512x512.png)",
+      "Simple neutral brand mark (not Microsoft-like), geometric symbol (app-mark.dim_512x512.png)"
+    ],
+    "edits": []
+  }
+}

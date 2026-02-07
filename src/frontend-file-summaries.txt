@@ -1,0 +1,16 @@
+{
+  "frontend/src/App.tsx": "Main application component that sets up TanStack Router with routes for landing, launcher, and tile placeholder pages.",
+  "frontend/src/components/AuthGate.tsx": "Authentication gate component that redirects authenticated users to the launcher and shows the landing page to unauthenticated users.",
+  "frontend/src/components/DisclaimerBanner.tsx": "Reusable disclaimer banner component that displays a demo notice and clarifies non-affiliation with Microsoft.",
+  "frontend/src/components/SignedInHeader.tsx": "Header component for authenticated users showing the principal ID and sign-out button with query cache clearing.",
+  "frontend/src/pages/LandingPage.tsx": "Landing page with Live.com-inspired sign-in UI featuring email/phone/Skype input, Internet Identity authentication, and generated background assets.",
+  "frontend/src/pages/LauncherPage.tsx": "Post-authentication app launcher page displaying a grid of 8 app tiles with search bar, user record data, and generated tile icons.",
+  "frontend/src/pages/TilePlaceholderPage.tsx": "Placeholder page for individual app tiles showing app name, description, and back navigation to launcher.",
+  "frontend/src/app/tiles.ts": "Tile metadata configuration defining 8 apps (Mail, Calendar, People, Files, Notes, Photos, Tasks, Settings) with names, descriptions, and routes.",
+  "frontend/src/queryClient.ts": "Shared React Query client instance exported for use across the application and auth state management.",
+  "frontend/src/queries/userQueries.ts": "React Query hooks for backend user operations including getUserRecord, registerOrGetUser, and isRegistered with proper cache invalidation.",
+  "frontend/src/hooks/useAuthRefresh.ts": "Custom hook that manages user registration on login and clears query cache on logout to maintain proper auth state.",
+  "frontend/src/main.tsx": "Application entry point wrapping the app with QueryClientProvider using the shared queryClient instance and InternetIdentityProvider.",
+  "frontend/src/index.css": "Global styles with OKLCH color system featuring a modern airy blue-tinted palette for light mode and deep blue for dark mode.",
+  "frontend/tailwind.config.js": "Tailwind configuration with extended color tokens, custom shadows, and refined border radius for the airy design aesthetic."
+}
